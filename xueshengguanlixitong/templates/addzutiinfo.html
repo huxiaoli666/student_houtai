@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="/static/js/jQuerynew.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <style>
+        form{
+        width: 800px;position: absolute;left:0;
+        top: 0;
+        right: 0; bottom: 0;
+        margin: auto;
+    }
+    .res{
+        margin-left: 20px;
+    }
+    </style>
+</head>
+<body style="background-color: #ffffff">
+
+    <form action="/zutiTableAdd/" method="post">
+        <input type="text" name="testid" class="form-control" placeholder="试题id" style="background-color: #ffffff"><br>
+        <input type="text" name="score" class="form-control" placeholder="试题的分值" style="background-color: #ffffff"><br>
+        <input type="text" name="flag" class="form-control" placeholder="组题的标识" style="background-color: #ffffff"><br>
+        <input type="datetime-local" name="start" class="form-control" placeholder="考试开始时间" style="background-color: #ffffff"><br>
+        <input type="datetime-local" name="end" class="form-control" placeholder="考试结束时间" style="background-color: #ffffff"><br>
+        <input type="text" name="classid" class="form-control" placeholder="所属班级" style="background-color: #ffffff"><br>
+        <input type="text" name="teachid" class="form-control" placeholder="出题教师" style="background-color: #ffffff"><br>
+        <input type="text" name="partid" class="form-control" placeholder="所属阶段" style="background-color: #ffffff"><br>
+
+        <br>
+        <input type="submit" class="btn btn-default" style="background-color: #E9EEF3">&nbsp;
+        <input type="reset" class="btn btn-default" style="background-color: #E9EEF3">
+    </form>
+
+</body>
+</html>

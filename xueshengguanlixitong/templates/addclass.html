@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        form{
+        width: 800px;position: absolute;left:0;
+        top: 0;
+        right: 0; bottom: 0;
+        margin: auto;
+    }
+    </style>
+    <script src="/static/js/jQuerynew.js"></script>
+</head>
+<body style="background-color: #ffffff">
+
+    <form action="/addclas/" method="post">
+        <input type="text" name="class_name" class="form-control" placeholder="班级名" style="background-color: #ffffff"><br>
+{#        <input type="text" name="gid" value="{{  teacherInfo.pid }}" class="form-control" placeholder="所属年级" style="background-color: #ffffff"><br>#}
+
+        <ul class="message">
+
+        </ul>
+        所属年级：
+        <select name="gid" id="gid">
+            <option value="0">请选择年级</option>
+            {% for item in teacherInfo %}
+                <option value="{{ item.gid }}">{{ item.gname }}</option>
+            {% endfor %}
+        </select>
+        所包含的阶段：
+        <select name="pid" id="pid" disabled>
+            <option></option>
+        </select>
+        所包含的老师：
+        <select name="tid" id="tid" disabled>
+            <option></option>
+        </select>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="hidden" value="" name="infos">
+        <input type="submit" class="btn btn-default" style="background-color: #ffffff">&nbsp;
+        <input type="reset" class="btn btn-default" style="background-color: #ffffff">
+    </form>
+    <script>
+
+        obj = {}
+        //事件委派的方式
+        $(".message").on("click","span",function () {
+
+            $(this).parent().remove()
+            pid = $(this).attr("attr")
+            for (var i in obj){
+                if (i==pid){
+                    delete obj["i"]
+                }
+            }
+            $("input[type=hidden]").val(JSON.stringify(obj))
+            console.log()
+        })
+
+        $("select[name=gid]").change(function () {
+            //处理年级请求
+            var val= $(this).select().val();
+            $.ajax({
+                url:"/classajax/",
+                data:{gid:val},
+                dataType:"json",
+                success(data){
+                    if(!data["pids"]){
+                        return
+                    }
+                    var keys = data["pids"].split(",");
+                    var values = data["pnames"].split(",");
+                    var arr = {};
+                    options=""
+                    for (var item in keys){
+                        arr[keys[item]] = values[item]
+                    }
+
+                    var pid = $("select[name=pid]");
+                    pid.removeAttr("disabled");  //移除属性
+                    options+="<option value='0'>请选择包含的阶段</option>"
+                    for (var i in arr){
+                        options+="<option value='"+i+"'>"+arr[i]+"</option>"
+                    }
+                    pid.html(options)
+
+                    //处理老师
+                    pid.change(function () {
+                        pid = $(this).select().val();
+                        console.log(this)
+                        $.ajax({
+                            url:"/classajax1/",
+                            data:{pid:pid},
+                            dataType:"json",
+                            success(data){
+                                console.log(data)
+                                //设置老师的信息
+                                var tid = $("select[name=tid]");
+                                tid.removeAttr("disabled");
+                                optionss="options+=\"<option value='0'>请选择老师</option>\""
+                                {#optionss=""#}
+                                data.forEach(function (value) {
+                                    optionss+=`<option value='${value.id}'>${value.name}</option>`
+                                })
+                                tid.html(optionss)
+
+                                //进行信息的呈现
+                                tid.change(function () {
+                                    pid=$("select[name=pid]").select().val()
+                                    pname=$("select[name=pid]").find("option:eq("+$("select[name=pid]")[0].selectedIndex+")").html()
+                                    tid=$(this).select().val()
+                                    tname=$(this).find("option:eq("+$(this)[0].selectedIndex+")").html()
+
+                                    newobj = {}
+                                    newobj.pid = pid
+                                    newobj.pname = pname
+                                    newobj.tid = tid
+                                    newobj.tname = tname
+                                    obj[pid] = newobj
+
+                                    var lis = ""
+                                    for (var item in obj){
+                                        lis+=`<li>${obj[item].pname}+${obj[item].tname} <span attr="${obj[item].pid}"> X </span></li>`
+                                    }
+                                    $(".message").html(lis)
+
+                                    $("input[type=hidden]").val(JSON.stringify(obj))
+                                })
+                            }
+                        })
+                    })
+                },
+            })
+        })
+
+    </script>
+</body>
+</html>

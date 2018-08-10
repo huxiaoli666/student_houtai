@@ -1,0 +1,60 @@
+
+.username{
+    position: absolute;
+    top:50px;
+    left:20px
+}
+.mima{
+    position: absolute;
+    top:70px;
+    left:0;
+}
+.password{
+    position: absolute;
+    top:120px;
+    left:20px;
+}
+.querenmima{
+    position: absolute;
+    top:150px;
+    left:0;
+}
+.password1{
+    position: absolute;
+    top:200px;
+    left:20px;
+}
+.tijiao{
+    position: absolute;
+    top:250px;
+    left:50px;
+    text-decoration: none;
+    color:#CCFAFF;
+}
+.chongzhi{
+    position: absolute;
+    top:250px;
+    right:70px;
+    text-decoration: none;
+    color: #CCFAFF;
+}
+input{
+    width:350px;
+    height: 30px;
+    border-radius: 10px;
+}
+.login{
+    position: absolute;
+    top:170px;
+    left:20px;
+    text-decoration:none;
+    color: white;
+}
+.sign{
+    position: absolute;
+    top:170px;
+    right:70px;
+    text-decoration:none;
+    color: white;
+}
+

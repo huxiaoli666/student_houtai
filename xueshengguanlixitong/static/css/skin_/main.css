@@ -1,0 +1,34 @@
+html{*overflow:auto;}
+#container{position:relative;}
+/*页面头部*/
+#hd{ position:relative; width:100%; height:110px; background:url(../../img/skin_/topbg.png) repeat-x; z-index:2;}
+.hd-top{height:55px; padding-top:9px;}
+/*logo*/
+.hd-top .logo{ position:relative; float:left; margin:0 0 0 20px; width:212px; height:49px; background:url(../../img/skin_/systemlogo.png) no-repeat;}
+.hd-top .logo .logo-icon{ position:absolute; right:0; top:18px; width:16px; height:15px; background:url(../../img/skin_/topxl.png);}
+.hd-top .logo .logo-icon:hover,.hd-top .logo .logo-icon.active{ background:url(../../img/skin_/switch-system/h.png);}
+/*用户登录信息*/
+.hd-top .user-info{ float:left; margin-left:33px; width:110px; height:49px; line-height:49px;}
+.hd-top .user-info .user-avatar{ position:relative; float:left; margin-top:6px; width:40px; height:40px; background:url(../../img/skin_/userfacebg.png); }
+.hd-top .user-info .user-avatar span{ position:absolute; top:2px; left:2px; width:34px; height:34px; background:url(../../img/skin_/userface.png);}
+.hd-top .user-info .user-avatar span .info-num{ position:absolute; top:-4px; right:-4px; width:16px; height:16px; line-height:16px; text-align:center; background:url(../../img/skin_/msg.png); color:#fff; font-style:normal;}
+.hd-top .user-info .user-name{ float:left; margin-left:6px; color:#fff;}
+.hd-top .user-info .more-info{ float:left; margin:19px 0 0 10px;width:16px;height:15px; background:url(../../img/skin_/userxl.png) center center no-repeat;}
+.hd-top .user-info .more-info.active,.hd-top .user-info .more-info:hover{ width:16px;height:15px;background:url(../../img/skin_/topxl.png);}
+/*顶部设置部分*/
+.hd-top .setting{ float:right; height:49px; margin-right:1px; line-height:49px;}
+.hd-top .setting .setting-skin{ float:left;}
+.hd-top .setting .setting-skin{float:left;position:relative;margin-right:5px;margin:10px 8px 0 0;text-align:center; cursor:pointer;}
+/*.hd-top .setting .setting-skin .text{line-height:28px;*position:relative;*top:-10px;color:#666;}*/
+.hd-top .setting .setting-skin i{position:absolute;}
+.hd-top .setting .setting-skin i.skin-icon{left:9px;top:9px;width:11px; height:10px; background:url(../../img/skin_/skinicon.png);}
+.hd-top .setting .setting-skin i.arrow-icon{right:12px;top:12px;width:7px; height:4px; background:url(../../img/skin_/skinxl.png);}
+.hd-top .setting .setting-skin:hover i.arrow-icon{background-position:-7px 0;}
+.hd-top .setting .setting-skin .switch-bar{width:82px;height:29px; background:url(../../img/skin_/skin-bg.png);}
+.hd-top .setting .setting-main{ float:left; width:152px;}
+.hd-top .setting .setting-main li{ float:left; width:38px;text-align:center; }
+.hd-top .setting .setting-main li a{color:#fff;}
+.hd-top .setting .setting-main li a:hover{text-decoration:none;color:#000;}
+.hd-top .setting .setting-main li a.close-btn{ float:left; margin:16px 0 0 11px; width:14px; height:14px;background:url(../../img/skin_/quit.png);}
+.hd-top .setting .setting-main li a.close-btn:hover{ background-position:-14px 0;}
+

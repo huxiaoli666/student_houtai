@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/skin_/main.css" />
+    <style>
+        .box{
+            width: 100vw;
+            height: 90vh;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            width:100%;
+            height: 10%;
+            background-color: #0C88C1;
+        }
+        .lefter{
+            width:15%;
+            height: 90%;
+            background-color: #F2F2F2;
+            float: left;
+            border-bottom: 3px solid #ffffff;
+        }
+        .main1{
+            width:85%;
+            height: 90%;
+            background-color: #ffffff;
+            float: left;
+            border-bottom: 3px solid #ffffff;
+        }
+        .footer{
+            border-top: 1px solid #F2F2F2;
+            width:100%;
+            height: 8%;
+            background-color: #FAFAFA;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <iframe src="/header/?name={{ name }}" frameborder="0" name="header" class="header"></iframe>
+    <iframe src="/lefter" frameborder="0" name="lefter"  class="lefter"></iframe>
+    <iframe src="/main1" frameborder="0" name="main1" class="main1"></iframe>
+    <iframe src="/footer" frameborder="0" name="footer" class="footer"></iframe>
+</div>
+</body>
+</html>
+
+

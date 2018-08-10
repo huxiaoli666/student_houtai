@@ -1,0 +1,199 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Document</title>
+    <script src="/static/js/vue.min.js"></script>
+    <script src="/static/js/jQuerynew.js"></script>
+</head>
+<body style="background-color: #ffffff">
+    {% verbatim %}
+        <div id="app">
+
+            <form action="/testTableAdd/" method="post" enctype="multipart/form-data">
+
+                <select v-model="gid" class="form-control" style="margin-top: 10px">
+                    <option value="0">试题表所属年级</option>
+                    <option :value="item.gid" v-for="item in gradeData">
+                        {{ item.gname }}
+                    </option>
+                </select>
+                <br>
+
+                <select v-model="pid" class="form-control">
+                    <option value="0">试题表所属阶段</option>
+                    <option :value="item.pid" v-for="item in partData">
+                        {{ item.pname }}
+                    </option>
+                </select>
+                <br>
+
+                <select  v-model="tid" class="form-control">
+                    <option value="0">选择所属类型</option>
+                    <option :value="item.tid" v-for="item in typeData">
+                        {{ item.tname }}
+                    </option>
+                </select>
+                <br>
+                <div class="radio" v-if="tid==1 || tid==2">
+                    <h3 v-model="title" v-if="tid==1">单选</h3>
+
+                    <h3 v-model="title" v-if="tid==2">多选</h3>
+                    题目：<input type="text" v-model="title">
+                    <input type="button" value="+" @click="addopt()">
+
+                    <div v-for="item in opts">
+                        <input type="text" :value="item.value">
+                        <input type="button" value="删除" @click="delopt(item.id)">
+                    </div>
+
+                    <div>
+                        答案：<input type="text" v-model="result">
+                    </div>
+                </div>
+                {{ types }}
+                 <div class="jianda" v-else-if="tid==3">
+                    <h3 v-model="title">简答</h3>
+                    <div>
+                        题目：<input type="text" v-model="title">
+                    </div>
+                    <div>
+                        答案：<textarea v-model="result" id="" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+
+                <input type="button" value="提交" @click="submit">
+            </form>
+        </div>
+        <a href="/testupfile">上传文件</a>
+    {% endverbatim %}
+</body>
+<script>
+
+    //封装ajax的方法
+    //2.callback------------获得数据之后所需要做得事情
+    /*
+    function postajax(url,data,callback) {
+        alert(1)
+        var obj = new XMLHttpRequest()
+        obj.onload=function () {
+            callback(obj.response)
+        }
+        obj.open("post",url)
+        obj.setRequestHeader("content-type","application/x-www-form-urlencoded")
+        obj.send(data)
+    }
+    */
+    function ajax(url,callback,data) {
+        var obj = new XMLHttpRequest()
+        obj.onload=function () {
+            callback(JSON.parse(obj.response))
+        }
+        obj.open("get",url+"?"+data)
+        obj.send()
+    }
+    new Vue({
+        el:"#app",
+        data:{
+            gradeData:[],
+            partData:[],
+            typeData:[],
+            opts:[],
+            types:0,
+            title:"",
+            result:"",
+            gid:0,
+            pid:0,
+            tid:0
+        },
+        mounted(){
+            ajax("/gradeajax/", (data)=> {
+                this.gradeData = data
+            })
+            ajax("/partajax/", (data)=> {
+                this.partData = data
+            })
+            ajax("/testajax/", (data)=> {
+                this.typeData = data
+            })
+            /*
+            params = `title=${title}&result=${result}&opts=${opts}&tid=${tid}&pid=${pid}&gid=${gid}`
+
+            postajax("/testTableAdd/",params,function (e) {
+                if(e=="ok"){
+                    alert("插入成功")
+                }else{
+                    alert("插入失败")
+                }
+
+            })
+            */
+        },
+        methods:{
+            addopt(){
+                var obj={};
+                obj.id = Math.random()*100+new Date();
+                obj.value="";
+                this.opts.push(obj);
+            },
+            delopt(id){
+                this.opts = this.opts.filter(function (item) {
+                    if (item.id != id){
+                        return item
+                    }
+                })
+            },
+            /*
+            submit(){
+                var title=this.title;
+                var result = this.result;
+
+                var arr = this.opts.map(function (item) {
+                    return item.value
+                })
+                var opts=arr.join("|");
+                if (this.tid==3){
+                    opts=null
+                }
+                var gid = this.gid
+                var pid = this.pid
+                var tid = this.tid
+
+
+            }
+            */
+            submit(){
+                var arr = this.opts.map(function (item) {
+                    return item.value
+                })
+                var opts = arr.join("|")
+                let formData = new FormData();
+                formData.append("gid",this.gid)
+                formData.append("pid",this.pid)
+                formData.append("tid",this.tid)
+                formData.append("title",this.title)
+                formData.append("opts",opts)
+                formData.append("result",this.result)
+                fetch("/testTableAdd/",{
+                    method:"POST",
+                    headers:{},
+                    body:formData
+                }).then((e)=>{
+                    return e.text()
+                }).then((e)=>{
+                    if (e=="ok"){
+                        location.href="/testtable/"
+                    }
+                    console.log("-----",title,result,opts)
+                })
+            }
+        }
+
+    })
+</script>
+</html>

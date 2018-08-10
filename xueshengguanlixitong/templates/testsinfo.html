@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="/static/js/jQuerynew.js"></script>
+    <style>
+        .kuang{
+            width: 500px;
+            height: 30px;
+            border: 1px solid #000000;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body style="background: #ffffff">
+    <div class="container" style="margin-top: 20px">
+    <form action="/searchname/" method="post">
+        搜索框 &nbsp;&nbsp;&nbsp;
+        <input type="text" name="searchname" class="kuang">
+        <input type="submit" value="搜索">
+
+    </form>
+ <ul>
+    <li >年级：
+        {% for item in grades %}
+            <span attr="gid" value="{{ item.gid }}" {% if item.gid == gid %} style="color:red" {% endif %}>{{ item.gname }}</span>
+        {% endfor %}
+    </li>
+    <li>科目：
+        {% for item in parts %}
+            <span attr="pid" value="{{ item.pid }}" {% if item.pid == pid %} style="color:red" {% endif %}>{{ item.pname }}</span>
+        {% endfor %}
+    </li>
+    <li>题型：
+
+        {% for item in types %}
+
+            <span attr="tid" value="{{ item.tid }}" {% if item.tid == tid %} style="color:red" {% endif %}>{{ item.tname }}</span>
+        {% endfor %}
+    </li>
+ </ul>
+    <form action="/testtable/" method="post">
+        <input type="hidden" name="gid">
+        <input type="hidden" name="pid">
+        <input type="hidden" name="tid">
+        <input type="submit" value="确定" id="sure">
+    </form>
+        <table class="table table-bordered">
+        <tr>
+            <td>试题表年级</td>
+            <td>试题所属阶段</td>
+            <td>试题所用类型</td>
+            <td>题干</td>
+            <td>选项</td>
+            <td>答案</td>
+            <td>操作</td>
+        </tr>
+        {% for item in data %}
+            <tr>
+                <td>{{ item.gnames }}</td>
+                <td>{{ item.pnames }}</td>
+                <td>{{ item.tnames }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.opts }}</td>
+                <td>{{ item.result }}</td>
+                <td>
+                    <a href="/edittests?id={{ item.id }}" class=" glyphicon glyphicon-pencil">&nbsp;</a>
+                    <a href="/deltests?id={{ item.id }}" class=" glyphicon glyphicon-trash"></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {{ page|safe }}
+    <a href="/testTableAdd" class="btn btn-primary" style="margin: auto;display: block">添加</a>
+    </div>
+</body>
+<script>
+    document.querySelector("ul").onclick=function (e) {
+        if(e.target.getAttribute("attr")=="gid"){
+            document.querySelector("input[name=gid]").value = e.target.getAttribute("value")
+        }
+        if (e.target.getAttribute("attr")=="pid"){
+            document.querySelector("input[name=pid]").value = e.target.getAttribute("value")
+        }
+        if (e.target.getAttribute("attr")=="tid"){
+            document.querySelector("input[name=tid]").value = e.target.getAttribute("value")
+        }
+    }
+    $("span[attr=gid]").click(function(){
+
+        $(this).parent().find("span[attr=gid]").css("color","")
+        $(this).css("color","red")
+    })
+     $("span[attr=pid]").click(function(){
+
+        $(this).parent().find("span[attr=pid]").css("color","")
+        $(this).css("color","red")
+    })
+     $("span[attr=tid]").click(function(){
+
+        $(this).parent().find("span[attr=tid]").css("color","")
+        $(this).css("color","red")
+    })
+
+
+
+</script>
+</html>

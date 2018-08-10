@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body style="background: #ffffff">
+    <div class="container" style="margin-top: 20px">
+        <form action="">
+            <table class="table table-bordered">
+            <tr>
+                <td>id</td>
+                <td>阶段的名字</td>
+                <td>阶段的标识</td>
+                <td>操作</td>
+            </tr>
+            {% for item in data %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.pname }}</td>
+                    <td>{{ item.pid }}</td>
+                    <td>
+                        <a href="/editPart?id={{ item.id }}" class=" glyphicon glyphicon-pencil">&nbsp;</a>
+                        <a href="/delpart?id={{ item.id }}" class=" glyphicon glyphicon-trash"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        </form>
+    {{ page|safe }}
+    <a href="/addpart" class="btn btn-primary" style="margin: auto;display: block">添加</a>
+    </div>
+</body>
+</html>
